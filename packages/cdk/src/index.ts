@@ -27,6 +27,7 @@ fn("DeleteUser", {
 new triggers.Trigger(stack, "Trigger", {
 	handler: fn("Migrator", {
 		entry: "../lambda-node/src/handlers/migrator.ts",
+		timeout: cdk.Duration.minutes(1),
 	}),
 });
 
@@ -35,6 +36,14 @@ function fn(id: string, props: nodejs.NodejsFunctionProps) {
 		functionName: `PlayDsql-${id}`,
 		architecture: lambda.Architecture.ARM_64,
 		...props,
+		bundling: {
+			format: nodejs.OutputFormat.ESM,
+
+			// see, https://github.com/aws/aws-cdk/issues/29310#issuecomment-1972560200
+			mainFields: ["module", "main"],
+			banner:
+				"const require = (await import('node:module')).createRequire(import.meta.url);const __filename = (await import('node:url')).fileURLToPath(import.meta.url);const __dirname = (await import('node:path')).dirname(__filename);",
+		},
 		environment: {
 			DSQL_CLUSTER_ID,
 			...(props.environment ?? {}),

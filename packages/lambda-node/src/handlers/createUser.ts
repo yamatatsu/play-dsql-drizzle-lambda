@@ -1,19 +1,23 @@
 import { randomUUID } from "node:crypto";
+import { sql } from "drizzle-orm";
 import { usersTable } from "../db/schema.js";
 import { generateDrizzleClient } from "../utils.js";
 
-const dbPromise = generateDrizzleClient();
-
-export const handler = async () => {
-	const db = await dbPromise;
-
-	const user = {
+const db = await generateDrizzleClient();
+const insertUser = db
+	.insert(usersTable)
+	.values({
+		id: sql.placeholder("id"),
 		name: "Alice",
 		age: 20,
-		email: `${randomUUID()}@example.com`,
-	} satisfies typeof usersTable.$inferInsert;
+		email: sql.placeholder("email"),
+	})
+	.prepare("insertUser");
+
+export const handler = async () => {
+	const uuid = randomUUID();
 
 	console.time("query");
-	await db.insert(usersTable).values(user);
+	await insertUser.execute({ id: uuid, email: `${uuid}@example.com` });
 	console.timeEnd("query");
 };

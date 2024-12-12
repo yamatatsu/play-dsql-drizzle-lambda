@@ -1,13 +1,11 @@
-import { eq } from "drizzle-orm";
 import { usersTable } from "../db/schema.js";
 import { generateDrizzleClient } from "../utils.js";
 
-const dbPromise = generateDrizzleClient();
+const db = await generateDrizzleClient();
+const deleteUsers = db.delete(usersTable).prepare("deleteUsers");
 
 export const handler = async () => {
-	const db = await dbPromise;
-
 	console.time("query");
-	await db.delete(usersTable);
+	await deleteUsers.execute();
 	console.timeEnd("query");
 };
