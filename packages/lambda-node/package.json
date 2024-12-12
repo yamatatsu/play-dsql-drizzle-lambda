@@ -1,22 +1,23 @@
 {
-  "name": "lambda-node",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "@aws-sdk/dsql-signer": "^3.705.0",
-    "@types/aws-lambda": "^8.10.146",
-    "@types/node": "^22.10.1",
-    "dotenv": "^16.4.7",
-    "drizzle-orm": "^0.37.0",
-    "pg": "^8.13.1"
-  },
-  "devDependencies": {
-    "@types/pg": "^8.11.10",
-    "drizzle-kit": "^0.29.0",
-    "tsx": "^4.19.2"
-  }
+	"name": "lambda-node",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"@aws-sdk/dsql-signer": "^3.709.0",
+		"@types/aws-lambda": "^8.10.146",
+		"@types/node": "^22.10.1",
+		"dotenv": "^16.4.7",
+		"drizzle-orm": "^0.38.1",
+		"pg": "^8.13.1"
+	},
+	"devDependencies": {
+		"@types/pg": "^8.11.10",
+		"drizzle-kit": "^0.30.0",
+		"tsx": "^4.19.2"
+	}
 }
